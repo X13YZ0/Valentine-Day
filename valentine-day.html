@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>การ์ดวันวาเลนไทน์</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            position: relative;
+        }
+
+        .card {
+            background-color: #fff0f5;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            padding: 30px;
+            max-width: 400px;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .heart {
+            width: 60px;
+            height: 60px;
+            background-color: #ff6b6b;
+            position: relative;
+            margin: 0 auto 20px;
+            transform: rotate(-45deg);
+            cursor: pointer;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            width: 60px;
+            height: 60px;
+            background-color: #ff6b6b;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .heart::before {
+            top: -30px;
+            left: 0;
+        }
+
+        .heart::after {
+            top: 0;
+            left: 30px;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1) rotate(-45deg);
+            }
+            50% {
+                transform: scale(1.1) rotate(-45deg);
+            }
+        }
+
+        h1 {
+            color: #ff1493;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px #ffa6c9;
+        }
+
+        p {
+            color: #ff69b4;
+            margin: 0;
+        }
+
+        .images {
+            position: relative;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .images img {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            animation: fadein 0.5s ease-in-out forwards, drop 3s ease-out forwards;
+            opacity: 0;
+            border-radius: 50%;
+        }
+
+        @keyframes fadein {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes drop {
+            0% {
+                transform: translateY(-1000px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .message {
+            position: absolute;
+            font-size: 20px;
+            color: #ff69b4;
+            text-shadow: 2px 2px #fff;
+            opacity: 0;
+            animation: messageFade 3s forwards;
+            z-index: 999;
+        }
+
+        @keyframes messageFade {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="heart" onclick="showImages()"></div>
+        <h1>สุขสันต์วันวาเลนไทน์</h1>
+        <p>ขอบคุณนะครับที่สอนเรื่องความรักมาตลอด</p>
+        <div class="images" id="imageContainer"></div>
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        function showImages() {
+            const imagesDiv = document.getElementById('imageContainer');
+            const messageDiv = document.getElementById('message');
+
+            // ข้อความสั้นๆ "รักนะ" หรือคำที่เกี่ยวข้อง
+            const loveMessages = ["รักนะ", "รักเธอ", "คิดถึงนะ", "ห่วงใยนะ"];
+            const randomMessage = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+
+            // เพิ่มข้อความสุ่ม
+            const message = document.createElement('div');
+            message.className = 'message';
+            message.innerHTML = randomMessage;
+            message.style.left = Math.random() * 90 + '%'; // สุ่มตำแหน่งแนวนอน
+            message.style.top = Math.random() * 90 + '%';  // สุ่มตำแหน่งแนวตั้ง
+            document.body.appendChild(message);
+
+            // รูปภาพจากโฟลเดอร์ 'images' ในโปรเจค
+            const imagesFromLocal = [
+                'images/valentine_image1.jpg',
+                'images/valentine_image2.jpeg',
+                'images/valentine_image3.jpeg',
+                'images/valentine_image4.jpeg'
+            ];
+
+            // สุ่มรูป
+            const randomImage = imagesFromLocal[Math.floor(Math.random() * imagesFromLocal.length)];
+
+            const imgElement = document.createElement('img');
+            imgElement.src = randomImage;
+            imagesDiv.appendChild(imgElement);
+
+            // การแสดงผลแบบโปรยรูป
+            setTimeout(() => {
+                imgElement.style.animation = "fadein 0.5s ease-in-out forwards, drop 3s ease-out forwards";
+            }, 100);
+        }
+    </script>
+</body>
+</html>
